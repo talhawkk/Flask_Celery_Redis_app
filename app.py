@@ -7,7 +7,8 @@ app = Flask(__name__)
 @app.route("/send-email", methods=["POST"])
 def send_email_api():
     data = request.json
-
+    if not all(k in data for k in ("to", "subject", "body")):
+        return jsonify({"error": "Missing required fields(to, subject, body)"}), 400
     task = send_email.delay(
         data["to"],
         data["subject"],
