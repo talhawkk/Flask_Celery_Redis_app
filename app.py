@@ -28,7 +28,11 @@ def generate_report_api():
         return jsonify({"error": "report_type is required"}), 400
     if data["report_type"] not in ["csv", "pdf"]:
         return jsonify({"error": "report_type must be either 'csv' or 'pdf'"}), 400
-    task = generate_report.delay(data["report_type"])
+    
+    # Get optional custom data from request (if not provided, task will use default)
+    custom_data = data.get("data", None)
+    
+    task = generate_report.delay(data["report_type"], custom_data)
 
     return jsonify({
         "task_id": task.id,
