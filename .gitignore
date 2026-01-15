@@ -4,3 +4,5 @@ __pycache__
 report.pdf
 report.csv
 .env
+lvenv/
+lvenv

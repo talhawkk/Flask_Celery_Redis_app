@@ -4,8 +4,11 @@ import pandas as pd
 from reportlab.pdfgen import canvas
 from smtplib import SMTP
 from email_utils import send_email_smtp
-# command to run celery worker:
+# command to run celery worker (1), on windows:
 # celery -A celery_app worker --loglevel=info --pool=solo
+# command to run celery worker (2), on linux:
+# celery -A celery_app worker --loglevel=info
+
 
 
 @celery.task(bind=True, max_retries=3, default_retry_delay=5)
@@ -20,7 +23,7 @@ def send_email(self, to, subject, body):
 @celery.task(bind=True, max_retries=3, default_retry_delay=5)
 def generate_report(self, report_type, data=None):
     try:
-        time.sleep(30)  # Simulate report generation delay
+        time.sleep(10)  
         
         # Default data if user doesn't provide any
         default_data = {
