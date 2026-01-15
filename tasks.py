@@ -14,7 +14,7 @@ from email_utils import send_email_smtp
 @celery.task(bind=True, max_retries=3, default_retry_delay=5)
 def send_email(self, to, subject, body):
     try:
-        time.sleep(5)  
+        time.sleep(15)  
         send_email_smtp(to, subject, body)
         return "Email has been sent successfully"
     except Exception as e:
@@ -23,7 +23,7 @@ def send_email(self, to, subject, body):
 @celery.task(bind=True, max_retries=3, default_retry_delay=5)
 def generate_report(self, report_type, data=None):
     try:
-        time.sleep(10)  
+        # time.sleep(1)  
         
         # Default data if user doesn't provide any
         default_data = {
